@@ -1,6 +1,9 @@
 <template>
-    <div class="card">
-        <div class="card_inner" :class="{ 'is_flipped': isFlipped }" @click="onTonggleFlipCard">
+    <div class="card" :class="{ 'disabled': isDisabled }">
+        <div class="card_inner" 
+            :class="{ 'is_flipped': isFlipped }" 
+            @click="onTonggleFlipCard"
+        >
             <div class="card_face card_face_front">
                 <div class="card_content"></div>
             </div>
@@ -24,11 +27,14 @@ export default{
     },
     data() {
         return {
-            isFlipped: false
+            isDisabled: false,
+            isFlipped: false,
         }
     },
     methods: {
         onTonggleFlipCard() {
+            if (this.isDisabled) return false;
+            
             this.isFlipped = !this.isFlipped;
 
             if (this.isFlipped) this.$emit("onFlip", this.card);
@@ -37,6 +43,10 @@ export default{
         onFlipBackCard() {
             this.isFlipped = false;
         },
+
+        onEnabledDisableMode(){
+            this.isDisabled = true;
+        }
     },
 }
 </script>
@@ -59,6 +69,10 @@ export default{
     position: relative;
 }
 
+.card.disabled .card_inner {
+    cursor: default;
+}
+
 .card_inner.is_flipped {
     transform: rotateY(-180deg);
 }
@@ -73,6 +87,7 @@ export default{
     padding: 1rem;
     box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
 }
+
 .card_face_front .card_content{
     background: url(../assets/images/icon_back.png) no-repeat center center;
     background-size: 40px 40px;

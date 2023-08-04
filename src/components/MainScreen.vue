@@ -3,6 +3,10 @@
         <h1>POKEMON</h1>
         <h3>Select mode to start game</h3>
         <div class="actions">
+            <button @click="onStart(4)">
+                <span>2x2</span>
+                <span>Very Easy</span>
+            </button>
             <button @click="onStart(16)">
                 <span>4x4</span>
                 <span>Easy</span>
